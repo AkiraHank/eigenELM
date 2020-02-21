@@ -183,10 +183,17 @@ void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &re
     resultsMat = H * m_Who;
 }
 
-void ELM_IN_ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat)
+float ELM_IN_ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat)
 {
+    //
+    for(int i=0;i<m_subElms.size();i++){
+        float score = m_subElms[i].validate(featuresMat,targetsMat);
+        std::cout<<"subElm score:"<<score<<std::endl;
+    }
+    
+    //
     Eigen::MatrixXf output;
     predict(featuresMat,output);
-    
-    std::cout<<"elm-in-elm 测试数据得分："<<calcScore(output,targetsMat)<<std::endl;
+    float score = calcScore(output,targetsMat);
+    return score;
 }

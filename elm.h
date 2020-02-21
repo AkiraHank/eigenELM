@@ -27,7 +27,7 @@ public:
     void predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat);
     
     //计分
-    void validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
+    float validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
     
 private:
     //随机种子

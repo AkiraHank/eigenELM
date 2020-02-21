@@ -132,11 +132,11 @@ void ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMa
     resultsMat = resultsMat * m_Who;
 }
 
-void ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat)
+float ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat)
 {
     Eigen::MatrixXf m;
     predict(featuresMat,m);
     
     float score = calcScore(m,targetsMat);
-    std::cout<<"测试数据得分："<<score<<std::endl;
+    return score;
 }
