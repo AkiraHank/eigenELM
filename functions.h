@@ -37,4 +37,6 @@ float calcScore(const Eigen::MatrixXf &output, const Eigen::MatrixXf &target);
 void saveLabelList(std::string filePath, std::vector<std::string> id_label_list);
 void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list);
 
+void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLimit);
+
 #endif // FUNCTIONS_H

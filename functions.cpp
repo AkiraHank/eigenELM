@@ -309,3 +309,22 @@ void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list
     
     ifs.close();
 }
+
+void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLimit)
+{
+    float trange = upperLimit - lowerLimit;
+    
+    float minVal, maxVal;
+    getMatMinMaxVal(featuresMat,minVal,maxVal);
+    float srange = maxVal - minVal;
+    float scaleRatio = trange/float(srange);
+    
+    int rows = featuresMat.rows();
+    int cols = featuresMat.cols();
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
+            float val = featuresMat(i,j);
+            featuresMat(i,j) = (val-minVal)*scaleRatio + lowerLimit;
+        }
+    }
+}
