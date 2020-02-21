@@ -81,6 +81,81 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
     }
 }
 
+void readValData(std::string filePath, 
+                 std::vector<std::string> id_label_list, 
+                 Eigen::MatrixXf &featuresMat, 
+                 Eigen::MatrixXf &targetsMat)
+{
+    std::ifstream ifs(filePath,std::ios::in);
+    if(!ifs.is_open()){
+        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        exit(1);
+    }
+    
+    //由输入的id_label_list生成targetMap
+    std::map<std::string,int> targetMap;
+    for(int i=0;i<id_label_list.size();i++){
+        targetMap.insert(std::make_pair(id_label_list[i],i));
+    }
+    
+    //读入feature和targetStrList
+    std::vector<std::string> targetStrList;
+    std::vector<std::vector<float>> featureVecs;
+    
+    std::string line;
+    while(getline(ifs,line)){
+        //去除换行符
+        if(line[line.length()-1] == '\n'){
+            line = line.substr(0,line.length()-1);
+        }
+        
+        //找到分隔符
+        int colonPos = line.find_first_of(":");
+        if(colonPos == std::string::npos){
+            std::cout<<"文件\""<<filePath<<"\"的内容格式不正确!"<<std::endl;
+            exit(1);
+        }
+        
+        //分隔符前为target
+        targetStrList.push_back(line.substr(0,colonPos));
+        
+        //分隔符后为feature
+        std::string featureStr = line.substr(colonPos+1,line.length());
+        std::vector<float> featureVec;
+        while(1){
+            int commaPos = featureStr.find_first_of(",");
+            if(commaPos == std::string::npos){
+                break;
+            }
+            float f = atof(featureStr.substr(0,commaPos).data());
+            featureVec.push_back(f);
+            
+            featureStr = featureStr.substr(commaPos+1,featureStr.length());
+        }
+        featureVec.push_back(atof(featureStr.data()));
+        featureVecs.push_back(featureVec);
+    }
+    
+    ifs.close();
+    
+    //feature转为MatrixXf格式
+    featuresMat.resize(featureVecs.size(),featureVecs[0].size());
+    for(int i=0;i<featuresMat.rows();i++)
+        for(int j=0;j<featuresMat.cols();j++){
+            featuresMat(i,j) = featureVecs[i][j];
+        }
+    
+    //target转为MatrixXf格式
+    targetsMat.resize(targetStrList.size(),targetMap.size());
+    for(int i=0;i<targetStrList.size();i++){
+        for(int j=0;j<targetsMat.cols();j++){
+            targetsMat(i,j) = 0;
+        }
+        int code = targetMap[targetStrList[i]];
+        targetsMat(i,code) = 1;
+    }
+}
+
 void readFeature(std::string filePath, Eigen::MatrixXf &featuresMat)
 {
     std::ifstream ifs(filePath,std::ios::in);

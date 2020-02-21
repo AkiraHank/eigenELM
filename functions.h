@@ -8,6 +8,12 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
                    Eigen::MatrixXf &targetsMat, 
                    std::vector<std::string> &id_label_list);
 
+//从文件读入测试数据
+void readValData(std::string filePath, 
+                 std::vector<std::string> id_label_list, 
+                 Eigen::MatrixXf &featuresMat, 
+                 Eigen::MatrixXf &targetsMat);
+
 //从文件读入特征
 void readFeature(std::string filePath, Eigen::MatrixXf &featuresMat);
 
