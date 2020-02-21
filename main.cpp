@@ -7,6 +7,31 @@
 
 int main(int argc, char ** argv)
 {
+    if(argc > 1 && (strcmp(argv[1],"validate")==0)){
+        std::string modelDir = argv[2];
+        std::string inputFile = argv[3];
+        
+        //加载模型
+        ELM_IN_ELM eie;
+        eie.loadModel(modelDir);
+        
+        //加载数据
+        Eigen::MatrixXf featuresMat;
+        Eigen::MatrixXf targetsMat;
+        std::vector<std::string> id_label_list;
+        if(modelDir[modelDir.length()-1] != '/')
+            modelDir.append("/");
+        loadLabelList(modelDir+"id_label_list.txt",id_label_list);
+        readValData(inputFile,id_label_list,featuresMat,targetsMat);
+        //normFeatures(featuresMat,-1,1);
+        
+        //测试得分
+        float score = eie.validate(featuresMat,targetsMat);
+        std::cout<<"elm-in-elm测试数据得分："<<score<<std::endl;
+        
+        return 0;
+    }
+    
     if(argc == 5){ //从零开始训练
         int nSubElms = atoi(argv[1]);
         int nSubElmH = atoi(argv[2]);
