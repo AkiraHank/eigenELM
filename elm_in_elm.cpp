@@ -159,7 +159,7 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
     
     Eigen::MatrixXf U;
     elmsVote(H,m_O,U);
-    std::cout<<"elm-in-elm 训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    std::cout<<"elms vote 训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
     
     /*
     //迭代更新K

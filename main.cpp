@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
         
         //测试得分
         float score = eie.validate(featuresMat,targetsMat);
-        std::cout<<"elm-in-elm测试数据得分："<<score<<std::endl;
+        std::cout<<"elms vote 测试数据得分："<<score<<std::endl;
         
         return 0;
     }
