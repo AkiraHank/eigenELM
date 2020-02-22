@@ -310,6 +310,24 @@ void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list
     ifs.close();
 }
 
+void getMatMinMaxVal(Eigen::MatrixXf mat, float &minVal, float &maxVal)
+{
+    int rows = mat.rows();
+    int cols = mat.cols();
+    
+    minVal = mat(0,0);
+    maxVal = mat(0,0);
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
+            float val = mat(i,j);
+            if(val > maxVal)
+                maxVal = val;
+            else if(val < minVal)
+                minVal = val;
+        }
+    }
+}
+
 void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLimit)
 {
     float trange = upperLimit - lowerLimit;

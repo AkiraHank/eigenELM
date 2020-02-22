@@ -93,8 +93,10 @@ int main(int argc, char ** argv)
         eie.predict(featuresMat,output);
         
         //加载id-label键值对
+        if(modelDir[modelDir.length()-1] != '/')
+            modelDir.append("/");
         std::vector<std::string> id_label_list;
-        loadLabelList("./net/id_label_list.txt",id_label_list);
+        loadLabelList(modelDir+"id_label_list.txt",id_label_list);
         
         //转换成label并输出到文件
         std::vector<std::string> outputLabels;

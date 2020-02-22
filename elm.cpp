@@ -116,11 +116,16 @@ void ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targe
     m_K = m_K + H.transpose()*H;
     
     //迭代更新Who
-    m_Who = m_Who + pinv(m_K)*H.transpose()*(targetsMat-H*m_Who);
+    //m_Who = m_Who + pinv(m_K)*H.transpose()*(targetsMat-H*m_Who);
+    //Eigen::FullPivLU<Eigen::MatrixXf> lu_decomp(m_K);
+    //std::cout<<lu_decomp.rank()<<std::endl;
+    //std::cout<<m_K<<std::endl;
+    
+    m_Who = m_Who + m_K.inverse()*H.transpose()*(targetsMat-H*m_Who);
     
     //计算在训练数据上的准确率
-    //Eigen::MatrixXf U = H * m_Who;
-    //std::cout<<"训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    Eigen::MatrixXf U = H * m_Who;
+    std::cout<<"elm训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
 }
 
 void ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat)
