@@ -41,7 +41,7 @@ void ELM_IN_ELM::saveModel(std::string dirPath)
     ofs.write((char*)params,sizeof(params));
     
     //写入权重矩阵
-    int h = m_nSubElms*m_O;
+    int h = m_nSubElms;
     for(int i=0;i<h;i++)
         for(int j=0;j<m_O;j++){
             ofs.write((char*)&m_Who(i,j),sizeof(float));
@@ -79,7 +79,7 @@ void ELM_IN_ELM::loadModel(std::string dirPath)
     m_nSubElmH = params[1];
     m_O = params[2];
     
-    int h = m_nSubElms*m_O;
+    int h = m_nSubElms;
     m_Who.resize(h,m_O);
     m_K.resize(h,h);
     for(int i=0;i<h;i++)
@@ -126,11 +126,11 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
         }
         
         //初始化Who
-        m_Who.resize(m_nSubElms*m_O,m_O);
+        m_Who.resize(m_nSubElms,m_O);
         m_Who.setZero();
         
         //初始化K
-        m_K.resize(m_nSubElms*m_O,m_nSubElms*m_O);
+        m_K.resize(m_nSubElms,m_nSubElms);
         m_K.setZero();
     }
     
@@ -142,17 +142,26 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
     //得到子elm的输出
     std::vector<Eigen::MatrixXf> subElmOutputs(m_nSubElms);
     for(int i=0;i<m_nSubElms;i++){
-        m_subElms[i].predict(featuresMat,subElmOutputs[i]);
+        Eigen::MatrixXf tmpOut;
+        m_subElms[i].predict(featuresMat,tmpOut);
+        denseEncodeOutput(tmpOut,subElmOutputs[i]);
     }
     
     //拼接子elm的输出
     Eigen::MatrixXf H;
-    H.resize(featuresMat.rows(),m_nSubElms*m_O);
+    H.resize(featuresMat.rows(),m_nSubElms);
     for(int i=0;i<m_nSubElms;i++){
-        H.block(0,i*m_O,H.rows(),m_O) = subElmOutputs[i];
+        H.block(0,i,H.rows(),1) = subElmOutputs[i];
     }
-    sigmoid(H);
+    //sigmoid(H);
     
+    //std::cout<<H<<std::endl;
+    
+    Eigen::MatrixXf U;
+    elmsVote(H,m_O,U);
+    std::cout<<"elm-in-elm 训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    
+    /*
     //迭代更新K
     m_K = m_K + H.transpose()*H;
     
@@ -162,6 +171,7 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
     //计算在训练数据上的准确率
     Eigen::MatrixXf U = H * m_Who;
     std::cout<<"elm-in-elm 训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    */
 }
 
 void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat)
@@ -169,18 +179,20 @@ void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &re
     //得到子elm的输出
     std::vector<Eigen::MatrixXf> subElmOutputs(m_nSubElms);
     for(int i=0;i<m_nSubElms;i++){
-        m_subElms[i].predict(featuresMat,subElmOutputs[i]);
+        Eigen::MatrixXf tmpOut;
+        m_subElms[i].predict(featuresMat,tmpOut);
+        denseEncodeOutput(tmpOut,subElmOutputs[i]);
     }
     
     //拼接子elm的输出
     Eigen::MatrixXf H;
-    H.resize(featuresMat.rows(),m_nSubElms*m_O);
+    H.resize(featuresMat.rows(),m_nSubElms);
     for(int i=0;i<m_nSubElms;i++){
-        H.block(0,i*m_O,H.rows(),m_O) = subElmOutputs[i];
+        H.block(0,i,H.rows(),1) = subElmOutputs[i];
     }
-    sigmoid(H);
+    //sigmoid(H);
     
-    resultsMat = H * m_Who;
+    elmsVote(H,m_O,resultsMat);
 }
 
 float ELM_IN_ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat)

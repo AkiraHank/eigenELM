@@ -40,4 +40,10 @@ void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list
 //特征归一化
 void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLimit);
 
+//elm输出的dense编码
+void denseEncodeOutput(const Eigen::MatrixXf &mat, Eigen::MatrixXf &result);
+
+//投票法
+void elmsVote(const Eigen::MatrixXf &input, int outDim, Eigen::MatrixXf &output);
+
 #endif // FUNCTIONS_H

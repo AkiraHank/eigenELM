@@ -346,3 +346,40 @@ void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLim
         }
     }
 }
+
+void denseEncodeOutput(const Eigen::MatrixXf &mat, Eigen::MatrixXf &result)
+{
+    result.resize(mat.rows(),1);
+    
+    for(int r=0;r<mat.rows();r++){
+        int maxId = getRowMaxId(mat.row(r));
+        result(r,0) = maxId;
+    }
+}
+
+void elmsVote(const Eigen::MatrixXf &input, int outDim, Eigen::MatrixXf &output)
+{
+    int nsamples = input.rows();
+    int nelms = input.cols();
+    
+    output.resize(nsamples,outDim);
+    output.setZero();
+    
+    for(int i=0;i<nsamples;i++){
+        std::vector<int> scoreBox(outDim,0);
+        for(int j=0;j<nelms;j++){
+            scoreBox[int(input(i,j))]++;
+        }
+        
+        int maxScore=0;
+        int maxId=0;
+        for(int m=0;m<outDim;m++){
+            if(scoreBox[m] > maxScore){
+                maxScore = scoreBox[m];
+                maxId = m;
+            }
+        }
+        
+        output(i,maxId) = 1;
+    }
+}
