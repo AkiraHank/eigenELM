@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        VoteElm.cpp \
         elm.cpp \
         elm_in_elm.cpp \
         functions.cpp \
@@ -12,6 +13,7 @@ SOURCES += \
 INCLUDEPATH += /home/liu/libraries/Eigen
 
 HEADERS += \
+  VoteElm.h \
   elm.h \
   elm_in_elm.h \
   functions.h

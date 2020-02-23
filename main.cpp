@@ -3,7 +3,7 @@
 
 #include <Eigen>
 #include "functions.h"
-#include "elm_in_elm.h"
+#include "VoteElm.h"
 
 int main(int argc, char ** argv)
 {
@@ -12,8 +12,8 @@ int main(int argc, char ** argv)
         std::string inputFile = argv[3];
         
         //加载模型
-        ELM_IN_ELM eie;
-        eie.loadModel(modelDir);
+        VoteElm velm;
+        velm.loadModel(modelDir);
         
         //加载数据
         Eigen::MatrixXf featuresMat;
@@ -23,11 +23,10 @@ int main(int argc, char ** argv)
             modelDir.append("/");
         loadLabelList(modelDir+"id_label_list.txt",id_label_list);
         readValData(inputFile,id_label_list,featuresMat,targetsMat);
-        //normFeatures(featuresMat,-1,1);
         
         //测试得分
-        float score = eie.validate(featuresMat,targetsMat);
-        std::cout<<"elms vote 测试数据得分："<<score<<std::endl;
+        float score = velm.validate(featuresMat,targetsMat);
+        std::cout<<"vote-elm 测试数据得分："<<score<<std::endl;
         
         return 0;
     }
@@ -45,11 +44,11 @@ int main(int argc, char ** argv)
         readTrainData(inputFile,featuresMat,targetsMat,id_label_list);
         
         //训练并保存模型
-        ELM_IN_ELM eie;
-        eie.setSubElmsNum(nSubElms);
-        eie.setSubModelHiddenNodes(nSubElmH);
-        eie.train(featuresMat,targetsMat);
-        eie.saveModel(modelDir);
+        VoteElm velm;
+        velm.setElmNum(nSubElms);
+        velm.setElmHiddenNodes(nSubElmH);
+        velm.train(featuresMat,targetsMat);
+        velm.saveModel(modelDir);
         
         //保存预测用的id-label键值对
         if(modelDir[modelDir.length()-1] != '/')
@@ -67,10 +66,10 @@ int main(int argc, char ** argv)
         readTrainData(inputFile,featuresMat,targetsMat,id_label_list);
         
         //加载、训练并保存模型
-        ELM_IN_ELM eie;
-        eie.loadModel(modelDir);
-        eie.train(featuresMat,targetsMat);
-        eie.saveModel(modelDir);
+        VoteElm velm;
+        velm.loadModel(modelDir);
+        velm.train(featuresMat,targetsMat);
+        velm.saveModel(modelDir);
         
         //保存预测用的id-label键值对
         if(modelDir[modelDir.length()-1] != '/')
@@ -87,10 +86,10 @@ int main(int argc, char ** argv)
         readFeature(inputFile,featuresMat);
         
         //加载模型并预测
-        ELM_IN_ELM eie;
-        eie.loadModel(modelDir);
+        VoteElm velm;
+        velm.loadModel(modelDir);
         Eigen::MatrixXf output;
-        eie.predict(featuresMat,output);
+        velm.predict(featuresMat,output);
         
         //加载id-label键值对
         if(modelDir[modelDir.length()-1] != '/')

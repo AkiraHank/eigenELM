@@ -43,7 +43,7 @@ void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLim
 //elm输出的dense编码
 void denseEncodeOutput(const Eigen::MatrixXf &mat, Eigen::MatrixXf &result);
 
-//投票法
+//投票法(输入是多个elm输出的dense code)
 void elmsVote(const Eigen::MatrixXf &input, int outDim, Eigen::MatrixXf &output);
 
 #endif // FUNCTIONS_H
