@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.17)
 project(eigenELM)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 #set_target_properties(eigenELM PROPERTIES LINKER_LANGUAGE CXX)
 
 aux_source_directory(./src SRC)
-include_directories(./include /Applications/MATLAB_R2022b.app/extern/include ./)
+include_directories(./include ./)
 
 add_executable(eigenELM ${SRC})

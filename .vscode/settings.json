@@ -79,6 +79,8 @@
     "algorithm": "cpp",
     "dense": "cpp",
     "core": "cpp",
-    "eigen": "cpp"
+    "eigen": "cpp",
+    "csignal": "cpp",
+    "filesystem": "cpp"
   }
 }
