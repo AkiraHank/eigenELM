@@ -2,11 +2,11 @@
 #include "functions.h"
 
 #include <random>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
 #include <fstream>
+#include "fileUtils.hpp"
 
 VoteElm::VoteElm()
 {
@@ -22,8 +22,8 @@ void VoteElm::saveModel(std::string dirPath)
     }
     
     //如果目标文件夹不存在则创建
-    if(access(dirPath.data(),F_OK) == -1){
-        int flag = mkdir(dirPath.data(),0777);
+    if(!fileUtils::checkInputFileValid(dirPath)) {
+        int flag = fs::create_directory(dirPath);
         if(flag == -1){
             std::cout<<"文件夹\""<<dirPath<<"\"不存在且创建失败！"<<std::endl;
             exit(1);

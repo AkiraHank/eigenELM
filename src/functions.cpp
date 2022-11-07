@@ -11,7 +11,7 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
 {
     std::ifstream ifs(filePath,std::ios::in);
     if(!ifs.is_open()){
-        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
         exit(1);
     }
     
@@ -29,7 +29,7 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
         //找到分隔符
         int colonPos = line.find_first_of(":");
         if(colonPos == std::string::npos){
-            std::cout<<"文件\""<<filePath<<"\"的内容格式不正确!"<<std::endl;
+            std::cout<<"文件\\"<<filePath<<"\\的内容格式不正确!"<<std::endl;
             exit(1);
         }
         
@@ -88,7 +88,7 @@ void readValData(std::string filePath,
 {
     std::ifstream ifs(filePath,std::ios::in);
     if(!ifs.is_open()){
-        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
         exit(1);
     }
     
@@ -112,7 +112,7 @@ void readValData(std::string filePath,
         //找到分隔符
         int colonPos = line.find_first_of(":");
         if(colonPos == std::string::npos){
-            std::cout<<"文件\""<<filePath<<"\"的内容格式不正确!"<<std::endl;
+            std::cout<<"文件\\"<<filePath<<"\\的内容格式不正确!"<<std::endl;
             exit(1);
         }
         
@@ -160,7 +160,7 @@ void readFeature(std::string filePath, Eigen::MatrixXf &featuresMat)
 {
     std::ifstream ifs(filePath,std::ios::in);
     if(!ifs.is_open()){
-        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
         exit(1);
     }
     
@@ -281,7 +281,7 @@ void saveLabelList(std::string filePath, std::vector<std::string> id_label_list)
     
     std::ofstream ofs(filePath,std::ios::out);
     if(!ofs.is_open()){
-        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
         exit(1);
     }
     ofs << contentStr;
@@ -293,7 +293,7 @@ void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list
 {
     std::ifstream ifs(filePath,std::ios::in);
     if(!ifs.is_open()){
-        std::cout<<"文件\""<<filePath<<"\"打开失败!"<<std::endl;
+        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
         exit(1);
     }
     

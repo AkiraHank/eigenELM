@@ -18,7 +18,7 @@ void ELM::saveModel(std::string filePath)
     //打开文件
     std::ofstream ofs(filePath, std::ios::out|std::ios::binary);
     if(!ofs.is_open()){
-        std::cout<<"打开或生成文件\""<<filePath<<"\"失败!"<<std::endl;
+        std::cout<<"打开或生成文件\\"<<filePath<<"\\失败!"<<std::endl;
         exit(1);
     }
     
@@ -49,7 +49,7 @@ void ELM::loadModel(std::string filePath)
     //打开文件
     std::ifstream ifs(filePath,std::ios::in|std::ios::binary);
     if(!ifs.is_open()){
-        std::cout<<"打开文件\""<<filePath<<"\"失败!"<<std::endl;
+        std::cout<<"打开文件\\"<<filePath<<"\\失败!"<<std::endl;
         exit(1);
     }
     

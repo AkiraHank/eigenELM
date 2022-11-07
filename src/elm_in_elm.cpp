@@ -2,11 +2,11 @@
 #include "functions.h"
 
 #include <random>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
 #include <fstream>
+#include "fileUtils.hpp"
 
 ELM_IN_ELM::ELM_IN_ELM()
 {
@@ -21,18 +21,18 @@ void ELM_IN_ELM::saveModel(std::string dirPath)
     }
     
     //如果目标文件夹不存在则创建
-    if(access(dirPath.data(),F_OK) == -1){
-        int flag = mkdir(dirPath.data(),0777);
-        if(flag == -1){
-            std::cout<<"文件夹\""<<dirPath<<"\"不存在且创建失败！"<<std::endl;
-            exit(1);
-        }
+    if (!fileUtils::checkInputFileValid(dirPath)) {
+      int flag = fs::create_directory(dirPath);
+      if (flag == -1) {
+        std::cout << "文件夹\\" << dirPath << "\\不存在且创建失败！" << std::endl;
+        exit(1);
+      }
     }
     
     //打开文件
     std::ofstream ofs(dirPath+"mainModel", std::ios::out|std::ios::binary);
     if(!ofs.is_open()){
-        std::cout<<"打开或生成文件\""<<dirPath+"mainModel"<<"\"失败!"<<std::endl;
+        std::cout<<"打开或生成文件\\"<<dirPath+"mainModel"<<"\\失败!"<<std::endl;
         exit(1);
     }
     
@@ -69,7 +69,7 @@ void ELM_IN_ELM::loadModel(std::string dirPath)
     //打开文件
     std::ifstream ifs(dirPath+"mainModel",std::ios::in|std::ios::binary);
     if(!ifs.is_open()){
-        std::cout<<"打开文件\""<<dirPath+"mainModel"<<"\"失败!"<<std::endl;
+        std::cout<<"打开文件\\"<<dirPath+"mainModel"<<"\\失败!"<<std::endl;
         exit(1);
     }
     
