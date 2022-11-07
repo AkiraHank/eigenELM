@@ -2,7 +2,6 @@
 #define ELM_H
 
 #include "Eigen/Eigen"
-#include "Eigen/Core"
 
 class ELM
 {

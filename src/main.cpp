@@ -1,7 +1,6 @@
 #include <iostream>
 #include <random>
 
-#include <Eigen>
 #include "functions.h"
 #include "VoteElm.h"
 
