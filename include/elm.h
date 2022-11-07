@@ -1,7 +1,8 @@
 #ifndef ELM_H
 #define ELM_H
 
-#include <eigen3/Eigen/Core>
+#include "Eigen/Eigen"
+#include "Eigen/Core"
 
 class ELM
 {
