@@ -1,13 +1,12 @@
-#ifndef ELM_IN_ELM_H
-#define ELM_IN_ELM_H
+#ifndef VOTEELM_H
+#define VOTEELM_H
 
-#include <Eigen>
 #include "elm.h"
 
-class ELM_IN_ELM
+class VoteElm
 {
 public:
-    ELM_IN_ELM();
+    VoteElm();
     
     //保存
     void saveModel(std::string dirPath);
@@ -16,10 +15,10 @@ public:
     void loadModel(std::string dirPath);
     
     //设置子elm个数
-    void setSubElmsNum(int n);
+    void setElmNum(int n);
     
     //设置子elm隐藏层节点数
-    void setSubModelHiddenNodes(int n);
+    void setElmHiddenNodes(int n);
     
     //训练
     void train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
@@ -31,23 +30,14 @@ public:
     float validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
     
 private:
-    //子elm
-    std::vector<ELM> m_subElms;
+    std::vector<ELM> m_elms;
     
-    //输出侧权重
-    Eigen::MatrixXf m_Who;
+    int m_nElms;
     
-    //子elm数目
-    int m_nSubElms;
-    
-    //子elm隐藏层节点数
-    int m_nSubElmH;
+    int m_nElmH;
     
     //输出向量维数
     int m_O;
-    
-    //在线序列学习用到的
-    Eigen::MatrixXf m_K;
 };
 
-#endif // ELM_IN_ELM_H
+#endif // VOTEELM_H

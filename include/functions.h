@@ -1,7 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <Eigen>
+#include "elm.h"
 
 //从文件读入训练数据
 void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat, 
