@@ -6,7 +6,7 @@
           "type": "lldb",  // 因为使用clang编译，所以用lldb来debug
           "request": "launch",
           "program": "${workspaceFolder}/build/eigenELM",  //指示生成的可执行文件
-          "args": ["1", "10", "/train/train_input.txt", "/train/net"],  //可执行文件的输入参数
+          "args": ["10", "50", "/train/train_input.txt", "/train/net"],  //可执行文件的输入参数
           "cwd": "${workspaceFolder}",
           "preLaunchTask": "build",
           "debugStdLib" : true
