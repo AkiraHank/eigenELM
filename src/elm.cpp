@@ -21,20 +21,20 @@ void ELM::saveModel(std::string filePath) {
 
   //写入矩阵尺寸信息
   int params[3] = {m_I, m_H, m_O};
-  ofs.write((char *)params, sizeof(params));
+  ofs.write((char*)params, sizeof(params));
 
   //写入Wih,Who
   for (int i = 0; i < m_I; i++)
     for (int j = 0; j < m_H; j++) {
-      ofs.write((char *)&m_Wih(i, j), sizeof(float));
+      ofs.write((char*)&m_Wih(i, j), sizeof(float));
     }
   for (int i = 0; i < m_H; i++)
     for (int j = 0; j < m_H; j++) {
-      ofs.write((char *)&m_K(i, j), sizeof(float));
+      ofs.write((char*)&m_K(i, j), sizeof(float));
     }
   for (int i = 0; i < m_H; i++)
     for (int j = 0; j < m_O; j++) {
-      ofs.write((char *)&m_Who(i, j), sizeof(float));
+      ofs.write((char*)&m_Who(i, j), sizeof(float));
     }
 
   //关闭文件
@@ -50,7 +50,7 @@ void ELM::loadModel(std::string filePath) {
   }
 
   int params[3];
-  ifs.read((char *)params, sizeof(params));
+  ifs.read((char*)params, sizeof(params));
   m_I = params[0];
   m_H = params[1];
   m_O = params[2];
@@ -60,15 +60,15 @@ void ELM::loadModel(std::string filePath) {
   m_Who.resize(m_H, m_O);
   for (int i = 0; i < m_I; i++)
     for (int j = 0; j < m_H; j++) {
-      ifs.read((char *)&m_Wih(i, j), sizeof(float));
+      ifs.read((char*)&m_Wih(i, j), sizeof(float));
     }
   for (int i = 0; i < m_H; i++)
     for (int j = 0; j < m_H; j++) {
-      ifs.read((char *)&m_K(i, j), sizeof(float));
+      ifs.read((char*)&m_K(i, j), sizeof(float));
     }
   for (int i = 0; i < m_H; i++)
     for (int j = 0; j < m_O; j++) {
-      ifs.read((char *)&m_Who(i, j), sizeof(float));
+      ifs.read((char*)&m_Who(i, j), sizeof(float));
     }
 
   ifs.close();
@@ -82,7 +82,7 @@ void ELM::setRandomState(int randomState) {
   m_randomState = randomState;
 }
 
-void ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+void ELM::train(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   m_I = featuresMat.cols();
   m_O = targetsMat.cols();
 
@@ -121,7 +121,7 @@ void ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targe
   std::cout << "elm训练数据得分: " << calcScore(U, targetsMat) << std::endl;
 }
 
-void ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat) {
+void ELM::predict(const Eigen::MatrixXf& featuresMat, Eigen::MatrixXf& resultsMat) {
   resultsMat = featuresMat * m_Wih;
   sigmoid(resultsMat);
   resultsMat.block(0, resultsMat.cols() - 1, resultsMat.rows(), 1).setOnes();
@@ -129,7 +129,7 @@ void ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMa
   resultsMat = resultsMat * m_Who;
 }
 
-float ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+float ELM::validate(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   Eigen::MatrixXf m;
   predict(featuresMat, m);
 

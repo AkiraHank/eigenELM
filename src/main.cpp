@@ -6,7 +6,7 @@
 #include "DataPreprocessHelper.h"
 using std::cout;
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   if (argc > 1 && (strcmp(argv[1], "validate") == 0)) {
     std::string modelDir = argv[2];
     std::string inputFile = argv[3];
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     inputFile = fs::current_path().string() + inputFile;
     modelDir = fs::current_path().string() + modelDir;
 
-    auto &dataPreprocessHelper = DataPreprocessHelper::getInstance();
+    auto& dataPreprocessHelper = DataPreprocessHelper::getInstance();
     dataPreprocessHelper.initTrainInput("/train/iris.data", "/train/train_input.txt");
 
     //读入训练数据

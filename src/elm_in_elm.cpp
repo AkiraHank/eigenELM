@@ -36,17 +36,17 @@ void ELM_IN_ELM::saveModel(std::string dirPath) {
 
   //写入矩阵尺寸信息
   int params[3] = {m_nSubElms, m_nSubElmH, m_O};
-  ofs.write((char *)params, sizeof(params));
+  ofs.write((char*)params, sizeof(params));
 
   //写入权重矩阵
   int h = m_nSubElms * m_O;
   for (int i = 0; i < h; i++)
     for (int j = 0; j < m_O; j++) {
-      ofs.write((char *)&m_Who(i, j), sizeof(float));
+      ofs.write((char*)&m_Who(i, j), sizeof(float));
     }
   for (int i = 0; i < h; i++)
     for (int j = 0; j < h; j++) {
-      ofs.write((char *)&m_K(i, j), sizeof(float));
+      ofs.write((char*)&m_K(i, j), sizeof(float));
     }
 
   ofs.close();
@@ -72,7 +72,7 @@ void ELM_IN_ELM::loadModel(std::string dirPath) {
   }
 
   int params[3];
-  ifs.read((char *)params, sizeof(params));
+  ifs.read((char*)params, sizeof(params));
   m_nSubElms = params[0];
   m_nSubElmH = params[1];
   m_O = params[2];
@@ -82,11 +82,11 @@ void ELM_IN_ELM::loadModel(std::string dirPath) {
   m_K.resize(h, h);
   for (int i = 0; i < h; i++)
     for (int j = 0; j < m_O; j++) {
-      ifs.read((char *)&m_Who(i, j), sizeof(float));
+      ifs.read((char*)&m_Who(i, j), sizeof(float));
     }
   for (int i = 0; i < h; i++)
     for (int j = 0; j < h; j++) {
-      ifs.read((char *)&m_K(i, j), sizeof(float));
+      ifs.read((char*)&m_K(i, j), sizeof(float));
     }
 
   ifs.close();
@@ -106,7 +106,7 @@ void ELM_IN_ELM::setSubModelHiddenNodes(int n) {
   m_nSubElmH = n;
 }
 
-void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+void ELM_IN_ELM::train(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   //初次训练的初始化
   if (m_subElms.empty()) {
     m_O = targetsMat.cols();
@@ -159,7 +159,7 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
   std::cout << "elm-in-elm训练数据得分: " << calcScore(U, targetsMat) << std::endl;
 }
 
-void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat) {
+void ELM_IN_ELM::predict(const Eigen::MatrixXf& featuresMat, Eigen::MatrixXf& resultsMat) {
   //得到子elm的输出
   std::vector<Eigen::MatrixXf> subElmOutputs(m_nSubElms);
   for (int i = 0; i < m_nSubElms; i++) {
@@ -177,7 +177,7 @@ void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &re
   resultsMat = H * m_Who;
 }
 
-float ELM_IN_ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+float ELM_IN_ELM::validate(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   //得到子elm的输出
   std::vector<Eigen::MatrixXf> subElmOutputs(m_nSubElms);
   for (int i = 0; i < m_nSubElms; i++) {

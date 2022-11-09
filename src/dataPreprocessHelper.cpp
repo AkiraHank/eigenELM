@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 
-bool DataPreprocessHelper::initTrainInput(std::string const &_rawDataPath, std::string const &_targetPath) {
+bool DataPreprocessHelper::initTrainInput(std::string const& _rawDataPath, std::string const& _targetPath) {
   // read rawData
   std::string rawDataPath = fs::current_path().string() + _rawDataPath;
   std::string targetPath = fs::current_path().string() + _targetPath;
@@ -24,7 +24,7 @@ bool DataPreprocessHelper::initTrainInput(std::string const &_rawDataPath, std::
     std::string strLine;
     std::unordered_map<std::string, int> cate2num;
     while (getline(ifs, strLine)) {
-      for (auto &c : strLine) {
+      for (auto& c : strLine) {
         if (c == ',') {
           c = ' ';
         }

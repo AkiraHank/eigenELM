@@ -36,7 +36,7 @@ void VoteElm::saveModel(std::string dirPath) {
 
   //写入elm个数和输出向量维数
   int params[2] = {m_nElms, m_O};
-  ofs.write((char *)params, sizeof(params));
+  ofs.write((char*)params, sizeof(params));
 
   ofs.close();
 
@@ -63,7 +63,7 @@ void VoteElm::loadModel(std::string dirPath) {
 
   //加载elm个数和输出向量维数
   int params[2];
-  ifs.read((char *)params, sizeof(params));
+  ifs.read((char*)params, sizeof(params));
   m_nElms = params[0];
   m_O = params[1];
 
@@ -87,7 +87,7 @@ void VoteElm::setElmHiddenNodes(int n) {
 }
 
 //训练
-void VoteElm::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+void VoteElm::train(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   //初次训练的初始化
   if (m_elms.empty()) {
     m_O = targetsMat.cols();
@@ -128,7 +128,7 @@ void VoteElm::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &t
 }
 
 //预测
-void VoteElm::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat) {
+void VoteElm::predict(const Eigen::MatrixXf& featuresMat, Eigen::MatrixXf& resultsMat) {
   //得到子elm的输出
   std::vector<Eigen::MatrixXf> subElmOutputs(m_nElms);
   for (int i = 0; i < m_nElms; i++) {
@@ -148,7 +148,7 @@ void VoteElm::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resul
 }
 
 //计分
-float VoteElm::validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat) {
+float VoteElm::validate(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat) {
   // elm得分
   for (int i = 0; i < m_elms.size(); i++) {
     float score = m_elms[i].validate(featuresMat, targetsMat);

@@ -21,5 +21,5 @@ static bool checkOutputFileValid(std::string const& path) {
   }
   return true;
 }
-}
+} // namespace fileUtils
 #endif

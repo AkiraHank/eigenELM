@@ -21,13 +21,13 @@ class VoteElm {
   void setElmHiddenNodes(int n);
 
   //训练
-  void train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
+  void train(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat);
 
   //预测
-  void predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat);
+  void predict(const Eigen::MatrixXf& featuresMat, Eigen::MatrixXf& resultsMat);
 
   //计分
-  float validate(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targetsMat);
+  float validate(const Eigen::MatrixXf& featuresMat, const Eigen::MatrixXf& targetsMat);
 
   private:
   std::vector<ELM> m_elms;

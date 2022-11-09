@@ -5,9 +5,9 @@
 #include <map>
 #include <random>
 
-void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
-                   Eigen::MatrixXf &targetsMat,             //与features对应的target
-                   std::vector<std::string> &id_label_list) // label列表，能够直接根据id得到label
+void readTrainData(std::string filePath, Eigen::MatrixXf& featuresMat,
+                   Eigen::MatrixXf& targetsMat,             //与features对应的target
+                   std::vector<std::string>& id_label_list) // label列表，能够直接根据id得到label
 {
   std::ifstream ifs(filePath, std::ios::in);
   if (!ifs.is_open()) {
@@ -83,8 +83,8 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
 
 void readValData(std::string filePath,
                  std::vector<std::string> id_label_list,
-                 Eigen::MatrixXf &featuresMat,
-                 Eigen::MatrixXf &targetsMat) {
+                 Eigen::MatrixXf& featuresMat,
+                 Eigen::MatrixXf& targetsMat) {
   std::ifstream ifs(filePath, std::ios::in);
   if (!ifs.is_open()) {
     std::cout << "文件\\" << filePath << "\\打开失败!" << std::endl;
@@ -155,7 +155,7 @@ void readValData(std::string filePath,
   }
 }
 
-void readFeature(std::string filePath, Eigen::MatrixXf &featuresMat) {
+void readFeature(std::string filePath, Eigen::MatrixXf& featuresMat) {
   std::ifstream ifs(filePath, std::ios::in);
   if (!ifs.is_open()) {
     std::cout << "文件\\" << filePath << "\\打开失败!" << std::endl;
@@ -219,7 +219,7 @@ Eigen::MatrixXf pinv(Eigen::MatrixXf A) {
   return X;
 }
 
-void genRandomMat(Eigen::MatrixXf &mat, int rows, int cols,
+void genRandomMat(Eigen::MatrixXf& mat, int rows, int cols,
                   float lowerLimit, float upperLimit, int randomState) {
   std::srand(randomState);
 
@@ -230,7 +230,7 @@ void genRandomMat(Eigen::MatrixXf &mat, int rows, int cols,
     }
 }
 
-void sigmoid(Eigen::MatrixXf &mat) {
+void sigmoid(Eigen::MatrixXf& mat) {
   for (int i = 0; i < mat.rows(); i++)
     for (int j = 0; j < mat.cols(); j++) {
       mat(i, j) = 1 / (1 + std::exp(-mat(i, j)));
@@ -250,7 +250,7 @@ int getRowMaxId(Eigen::MatrixXf row) {
   return maxId;
 }
 
-float calcScore(const Eigen::MatrixXf &output, const Eigen::MatrixXf &target) {
+float calcScore(const Eigen::MatrixXf& output, const Eigen::MatrixXf& target) {
   int Q = output.rows();
   int ncorrect = 0;
 
@@ -282,7 +282,7 @@ void saveLabelList(std::string filePath, std::vector<std::string> id_label_list)
   ofs.close();
 }
 
-void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list) {
+void loadLabelList(std::string filePath, std::vector<std::string>& id_label_list) {
   std::ifstream ifs(filePath, std::ios::in);
   if (!ifs.is_open()) {
     std::cout << "文件\\" << filePath << "\\打开失败!" << std::endl;
@@ -302,7 +302,7 @@ void loadLabelList(std::string filePath, std::vector<std::string> &id_label_list
   ifs.close();
 }
 
-void getMatMinMaxVal(Eigen::MatrixXf mat, float &minVal, float &maxVal) {
+void getMatMinMaxVal(Eigen::MatrixXf mat, float& minVal, float& maxVal) {
   int rows = mat.rows();
   int cols = mat.cols();
 
@@ -319,7 +319,7 @@ void getMatMinMaxVal(Eigen::MatrixXf mat, float &minVal, float &maxVal) {
   }
 }
 
-void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLimit) {
+void normFeatures(Eigen::MatrixXf& featuresMat, float lowerLimit, float upperLimit) {
   float trange = upperLimit - lowerLimit;
 
   float minVal, maxVal;
@@ -337,7 +337,7 @@ void normFeatures(Eigen::MatrixXf &featuresMat, float lowerLimit, float upperLim
   }
 }
 
-void denseEncodeOutput(const Eigen::MatrixXf &mat, Eigen::MatrixXf &result) {
+void denseEncodeOutput(const Eigen::MatrixXf& mat, Eigen::MatrixXf& result) {
   result.resize(mat.rows(), 1);
 
   for (int r = 0; r < mat.rows(); r++) {
@@ -346,7 +346,7 @@ void denseEncodeOutput(const Eigen::MatrixXf &mat, Eigen::MatrixXf &result) {
   }
 }
 
-void elmsVote(const Eigen::MatrixXf &input, int outDim, Eigen::MatrixXf &output) {
+void elmsVote(const Eigen::MatrixXf& input, int outDim, Eigen::MatrixXf& output) {
   int nsamples = input.rows();
   int nelms = input.cols();
 
