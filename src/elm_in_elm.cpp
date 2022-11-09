@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <fstream>
-#include "fileUtils.hpp"
+#include "DataPreprocessHelper.h"
 
 ELM_IN_ELM::ELM_IN_ELM()
 {
@@ -161,7 +161,7 @@ void ELM_IN_ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf
     
     //计算在训练数据上的准确率
     Eigen::MatrixXf U = H * m_Who;
-    std::cout<<"elm-in-elm训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    std::cout<<"elm-in-elm训练数据得分: "<<calcScore(U,targetsMat)<<std::endl;
 }
 
 void ELM_IN_ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat)

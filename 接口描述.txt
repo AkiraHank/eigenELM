@@ -18,3 +18,4 @@
     predict_input.txt:每一行为一个特征向量
     net:从该文件夹读取模型参数
     output.txt：将输出结果保存到该文件
+ 

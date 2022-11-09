@@ -125,7 +125,7 @@ void ELM::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &targe
     
     //计算在训练数据上的准确率
     Eigen::MatrixXf U = H * m_Who;
-    std::cout<<"elm训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    std::cout<<"elm训练数据得分: "<<calcScore(U,targetsMat)<<std::endl;
 }
 
 void ELM::predict(const Eigen::MatrixXf &featuresMat, Eigen::MatrixXf &resultsMat)

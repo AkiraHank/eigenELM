@@ -4,17 +4,20 @@
 #include <string>
 #include "fileUtils.hpp"
 
-class dataPreprocessHelper {
+class DataPreprocessHelper {
 public:
-  dataPreprocessHelper& getInstance() {
-    static dataPreprocessHelper instance;
+  DataPreprocessHelper(const DataPreprocessHelper &) = delete;
+  DataPreprocessHelper &operator=(const DataPreprocessHelper &) = delete;
+
+  static DataPreprocessHelper& getInstance() {
+    static DataPreprocessHelper instance;
     return instance; 
   }
 
   bool initTrainInput(std::string const& rawDataPath, std::string const& targetPath);
 
 private:
-  dataPreprocessHelper();
+  DataPreprocessHelper(){};
 };
 
 #endif

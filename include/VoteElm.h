@@ -2,6 +2,7 @@
 #define VOTEELM_H
 
 #include "elm.h"
+#include "DataPreprocessHelper.h"
 
 class VoteElm
 {

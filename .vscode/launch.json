@@ -1,7 +1,15 @@
 {
-  // 使用 IntelliSense 了解相关属性。 
-  // 悬停以查看现有属性的描述。
-  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "configurations": []
+  "configurations": [
+      {
+          "name": "build & debug",  // 自助命名
+          "type": "lldb",  // 因为使用clang编译，所以用lldb来debug
+          "request": "launch",
+          "program": "${workspaceFolder}/build/eigenELM",  //指示生成的可执行文件
+          "args": ["1", "10", "/train/train_input.txt", "/train/net"],  //可执行文件的输入参数
+          "cwd": "${workspaceFolder}",
+          "preLaunchTask": "build",
+          "debugStdLib" : true
+      }
+  ]
 }

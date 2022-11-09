@@ -1,14 +1,17 @@
+#ifndef FILEUTILS_H
+#define FILEUTILS_H
+
 #include <filesystem>
 #include <string>
+#include <iostream>
 namespace fs = std::filesystem;
 
 namespace fileUtils {
-
-bool checkInputFileValid(std::string const& path) {
+static bool checkInputFileValid(std::string const& path) {
   return fs::exists(path);
 }
 
-bool checkOutputFileValid(std::string const& path) {
+static bool checkOutputFileValid(std::string const& path) {
   int index = path.find_last_of('/');
   if (index != std::string::npos) {
     std::string dir = path.substr(0, index);
@@ -18,5 +21,5 @@ bool checkOutputFileValid(std::string const& path) {
   }
   return true;
 }
-
 }
+#endif

@@ -11,7 +11,7 @@ void readTrainData(std::string filePath, Eigen::MatrixXf &featuresMat,
 {
     std::ifstream ifs(filePath,std::ios::in);
     if(!ifs.is_open()){
-        std::cout<<"文件\\"<<filePath<<"\\打开失败!"<<std::endl;
+        std::cout<<"文件 "<<filePath<<" 打开失败!"<<std::endl;
         exit(1);
     }
     

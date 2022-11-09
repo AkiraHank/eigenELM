@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <fstream>
-#include "fileUtils.hpp"
 
 VoteElm::VoteElm()
 {
@@ -130,7 +129,7 @@ void VoteElm::train(const Eigen::MatrixXf &featuresMat, const Eigen::MatrixXf &t
     
     Eigen::MatrixXf U;
     elmsVote(H,m_O,U);
-    std::cout<<"elms vote 训练数据得分："<<calcScore(U,targetsMat)<<std::endl;
+    std::cout<<"elms vote 训练数据得分: "<<calcScore(U,targetsMat)<<std::endl;
 }
 
 //预测

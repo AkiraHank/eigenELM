@@ -3,6 +3,8 @@
 
 #include "functions.h"
 #include "VoteElm.h"
+#include "DataPreprocessHelper.h"
+using std::cout;
 
 int main(int argc, char ** argv)
 {
@@ -31,16 +33,22 @@ int main(int argc, char ** argv)
     }
     
     if(argc == 5){ //从零开始训练
+
         int nSubElms = atoi(argv[1]);
         int nSubElmH = atoi(argv[2]);
         std::string inputFile = argv[3];
         std::string modelDir = argv[4];
+        inputFile = fs::current_path().string() + inputFile;
+        modelDir = fs::current_path().string() + modelDir;
+
+        auto& dataPreprocessHelper = DataPreprocessHelper::getInstance();
+        dataPreprocessHelper.initTrainInput("/train/iris.data", "/train/train_input.txt");
         
         //读入训练数据
         Eigen::MatrixXf featuresMat;
         Eigen::MatrixXf targetsMat;
         std::vector<std::string> id_label_list;
-        readTrainData(inputFile,featuresMat,targetsMat,id_label_list);
+        readTrainData(inputFile, featuresMat, targetsMat, id_label_list);
         
         //训练并保存模型
         VoteElm velm;
