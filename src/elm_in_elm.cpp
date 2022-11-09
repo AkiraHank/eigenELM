@@ -187,7 +187,7 @@ float ELM_IN_ELM::validate(const Eigen::MatrixXf &featuresMat, const Eigen::Matr
   // test
   for (int i = 0; i < subElmOutputs.size(); i++) {
     float score = calcScore(subElmOutputs[i], targetsMat);
-    std::cout << "elm测试数据得分：" << score << std::endl;
+    std::cout << "elm测试数据得分: " << score << std::endl;
   }
 
   //拼接子elm的输出
